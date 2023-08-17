@@ -2,7 +2,7 @@ package ar.unrn.tp.modelo;
 
 import java.time.LocalDate;
 
-public class MarcaPromocion extends Promocion{
+public class MarcaPromocion extends Promocion {
     private Marca marca;
 
     public MarcaPromocion(LocalDate fechaInicio, LocalDate fechaFin, Marca marca) {
@@ -17,7 +17,7 @@ public class MarcaPromocion extends Promocion{
         return 0;
     }
 
-    public double descuento(){
+    public double descuento() {
         LocalDate hoy = LocalDate.now();
         if (hoy.isBefore(this.fechaFin()) && hoy.isAfter(this.fechaInicio()))
             return 0.05;

@@ -31,7 +31,7 @@ public class Carrito {
         return pagoPromocion.aplicarDescuento(precio, tarjeta);
     }
 
-    public Venta pagar(MarcaPromocion marcaPromocion, PagoPromocion pagoPromocion, Cliente cliente, Tarjeta tarjeta){
+    public Venta pagar(MarcaPromocion marcaPromocion, PagoPromocion pagoPromocion, Cliente cliente, Tarjeta tarjeta) {
         return new Venta(LocalDateTime.now(), cliente, tarjeta, productos, calcularMontoCarrito(marcaPromocion, pagoPromocion, tarjeta));
     }
 }

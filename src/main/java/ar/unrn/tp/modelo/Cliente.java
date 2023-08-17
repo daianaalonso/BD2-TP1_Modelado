@@ -15,7 +15,7 @@ public class Cliente {
     public Cliente(String nombre, String apellido, String dni, String email) {
         if (!(nombre == null || nombre.isEmpty()))
             throw new RuntimeException("El nombre debe ser valido");
-            this.nombre = nombre;
+        this.nombre = nombre;
 
         if (!(apellido == null || apellido.isEmpty()))
             throw new RuntimeException("El apellido debe ser valido");
@@ -40,7 +40,7 @@ public class Cliente {
         return matcher.find();
     }
 
-    public void agregarTarjeta(Tarjeta tarjeta){
+    public void agregarTarjeta(Tarjeta tarjeta) {
         this.tarjetas.add(tarjeta);
     }
 }

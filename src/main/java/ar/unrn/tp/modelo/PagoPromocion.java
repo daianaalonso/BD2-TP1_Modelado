@@ -2,7 +2,7 @@ package ar.unrn.tp.modelo;
 
 import java.time.LocalDate;
 
-public class PagoPromocion extends Promocion{
+public class PagoPromocion extends Promocion {
     private Tarjeta tarjeta;
 
 
@@ -16,9 +16,10 @@ public class PagoPromocion extends Promocion{
             return precio - (precio * descuento());
         return precio;
     }
+
     public double descuento() {
         LocalDate hoy = LocalDate.now();
-        if (hoy.isAfter(this.fechaFin()) || hoy.isBefore(this.fechaInicio())){
+        if (hoy.isAfter(this.fechaFin()) || hoy.isBefore(this.fechaInicio())) {
             return 0;
         }
         return 0.08;

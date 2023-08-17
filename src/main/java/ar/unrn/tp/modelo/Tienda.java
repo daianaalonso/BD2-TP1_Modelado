@@ -14,7 +14,7 @@ public class Tienda {
         ventas.add(venta);
     }
 
-    public boolean existeVenta(Venta v){
+    public boolean existeVenta(Venta v) {
         return ventas.stream().anyMatch(venta -> venta.equals(v));
     }
 }

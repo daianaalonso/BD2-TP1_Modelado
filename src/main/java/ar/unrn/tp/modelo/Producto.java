@@ -37,23 +37,23 @@ public class Producto {
         return dato == null;
     }
 
-    public String descripcion(){
+    public String descripcion() {
         return descripcion;
     }
 
-    public String codigo(){
+    public String codigo() {
         return codigo;
     }
 
-    public double precio(){
+    public double precio() {
         return precio;
     }
 
-    public boolean esMarca(Marca marca){
+    public boolean esMarca(Marca marca) {
         return this.marca.equals(marca);
     }
 
-    public Categoria categoria(){
+    public Categoria categoria() {
         return categoria;
     }
 

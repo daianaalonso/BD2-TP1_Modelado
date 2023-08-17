@@ -16,6 +16,7 @@ public abstract class Promocion {
     private boolean validarFecha(LocalDate fechaInicio, LocalDate fechaFin) {
         return fechaInicio.isBefore(fechaFin);
     }
+
     public LocalDate fechaInicio() {
         return fechaInicio;
     }
