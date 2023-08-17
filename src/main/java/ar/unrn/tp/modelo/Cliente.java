@@ -13,15 +13,15 @@ public class Cliente {
     private List<Tarjeta> tarjetas;
 
     public Cliente(String nombre, String apellido, String dni, String email) {
-        if (!(nombre == null || nombre.isEmpty()))
+        if (nombre == null || nombre.isEmpty())
             throw new RuntimeException("El nombre debe ser valido");
         this.nombre = nombre;
 
-        if (!(apellido == null || apellido.isEmpty()))
+        if (apellido == null || apellido.isEmpty())
             throw new RuntimeException("El apellido debe ser valido");
         this.apellido = apellido;
 
-        if (!(dni == null || nombre.isEmpty()))
+        if (dni == null || nombre.isEmpty())
             throw new RuntimeException("El DNI debe ser valido");
         this.dni = dni;
 
