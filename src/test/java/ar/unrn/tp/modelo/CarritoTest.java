@@ -1,6 +1,7 @@
 package ar.unrn.tp.modelo;
 
 import org.junit.Test;
+
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +16,7 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
         Marca acme = new Marca("Acme");
         Producto producto1 = new Producto("Remera", "1", 4000.0, comarca, categoria1);
-        Producto producto2  = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
+        Producto producto2 = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
         Tarjeta memeCard = Tarjeta.MemeCard;
         Carrito carrito = new Carrito();
 
@@ -36,7 +37,7 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
         Marca acme = new Marca("Acme");
         Producto producto1 = new Producto("Remera", "1", 4000.0, comarca, categoria1);
-        Producto producto2  = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
+        Producto producto2 = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
         Tarjeta memeCard = Tarjeta.MemeCard;
         Carrito carrito = new Carrito();
 
@@ -57,7 +58,7 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
         Marca acme = new Marca("Acme");
         Producto producto1 = new Producto("Remera", "1", 4000.0, comarca, categoria1);
-        Producto producto2  = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
+        Producto producto2 = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
         Tarjeta visa = Tarjeta.VISA;
         Carrito carrito = new Carrito();
 
@@ -78,7 +79,7 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
         Marca acme = new Marca("Acme");
         Producto producto1 = new Producto("Remera", "1", 4000.0, comarca, categoria1);
-        Producto producto2  = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
+        Producto producto2 = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
         Tarjeta memeCard = Tarjeta.MemeCard;
         Carrito carrito = new Carrito();
 
@@ -99,7 +100,7 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
         Marca acme = new Marca("Acme");
         Producto producto1 = new Producto("Remera", "1", 4000.0, comarca, categoria1);
-        Producto producto2  = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
+        Producto producto2 = new Producto("Zapatillas", "2", 30000.0, acme, categoria2);
         Tarjeta naranja = Tarjeta.NARANJA;
         Carrito carrito = new Carrito();
         Tienda tienda = new Tienda();
@@ -124,56 +125,64 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
 
         assertThrows(RuntimeException.class, () -> {
-            new Producto("Remera", "1", 4000.0, comarca, null);});
+            new Producto("Remera", "1", 4000.0, comarca, null);
+        });
     }
 
     @Test
-    public void productoSinPrecio(){
+    public void productoSinPrecio() {
         Marca comarca = new Marca("Comarca");
         Categoria categoria1 = new Categoria("Indumentaria");
 
         assertThrows(RuntimeException.class, () -> {
-            new Producto("Remera", "1", null, comarca, categoria1);});
+            new Producto("Remera", "1", null, comarca, categoria1);
+        });
     }
 
     @Test
-    public void productoSinDescripcion(){
+    public void productoSinDescripcion() {
         Marca comarca = new Marca("Comarca");
         Categoria categoria1 = new Categoria("Indumentaria");
 
         assertThrows(RuntimeException.class, () -> {
-            new Producto(null, "1", 4000.0, comarca, categoria1);});
+            new Producto(null, "1", 4000.0, comarca, categoria1);
+        });
     }
 
     //cliente sin dni, nombre y apellido
     @Test
     public void clienteSinDNI() {
         assertThrows(RuntimeException.class, () -> {
-            new Cliente("Daiana", "Alonso", null, "dalonso@gmail.com");});
+            new Cliente("Daiana", "Alonso", null, "dalonso@gmail.com");
+        });
     }
 
     @Test
-    public void clienteSinNombre(){
+    public void clienteSinNombre() {
         assertThrows(RuntimeException.class, () -> {
-            new Cliente(null, "Alonso", "42448077", "dalonso@gmail.com");});
+            new Cliente(null, "Alonso", "42448077", "dalonso@gmail.com");
+        });
     }
 
     @Test
-    public void clienteSinApellido(){
+    public void clienteSinApellido() {
         assertThrows(RuntimeException.class, () -> {
-            new Cliente("Daiana", null, "42448077", "dalonso@gmail.com");});
+            new Cliente("Daiana", null, "42448077", "dalonso@gmail.com");
+        });
     }
 
     @Test
-    public void clienteConMailValido(){
+    public void clienteConMailValido() {
         assertThrows(RuntimeException.class, () -> {
-            new Cliente("Daiana", "Alonso", "42448077", "123");});
+            new Cliente("Daiana", "Alonso", "42448077", "123");
+        });
     }
 
     // descuento de pago con fechas invalidas
     @Test
-    public void descuentoConFechaInvalida(){
+    public void descuentoConFechaInvalida() {
         assertThrows(RuntimeException.class, () -> {
-            new PagoPromocion(LocalDate.now(), LocalDate.now().minusDays(2), Tarjeta.NARANJA);});
+            new PagoPromocion(LocalDate.now(), LocalDate.now().minusDays(2), Tarjeta.NARANJA);
+        });
     }
 }
