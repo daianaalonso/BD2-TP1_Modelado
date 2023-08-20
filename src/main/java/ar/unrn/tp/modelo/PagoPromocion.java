@@ -18,10 +18,9 @@ public class PagoPromocion extends Promocion {
     }
 
     public double descuento() {
-        LocalDate hoy = LocalDate.now();
-        if (hoy.isAfter(this.fechaFin()) || hoy.isBefore(this.fechaInicio())) {
-            return 0;
+        if (estaEnCurso()) {
+            return 0.08;
         }
-        return 0.08;
+        return 0;
     }
 }

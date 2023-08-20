@@ -18,10 +18,8 @@ public class MarcaPromocion extends Promocion {
     }
 
     public double descuento() {
-        LocalDate hoy = LocalDate.now();
-        if (hoy.isBefore(this.fechaFin()) && hoy.isAfter(this.fechaInicio()))
+        if (estaEnCurso())
             return 0.05;
         return 0;
     }
-
 }
