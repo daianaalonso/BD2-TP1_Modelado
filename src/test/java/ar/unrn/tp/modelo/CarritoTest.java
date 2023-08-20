@@ -92,7 +92,7 @@ public class CarritoTest {
         assertEquals(31096, carrito.calcularMontoCarrito(descuentoMarca1, descuentoPago1, memeCard));
     }
 
-    //realizar pago y validar venta
+    //realizar pago y validar que se genero la venta
     @Test
     public void pagar() {
         Categoria categoria1 = new Categoria("Indumentaria");
@@ -113,7 +113,10 @@ public class CarritoTest {
         carrito.agregarProductoAlCarrito(producto1);
         carrito.agregarProductoAlCarrito(producto2);
 
+        assertEquals(33800, carrito.calcularMontoCarrito(descuentoMarca1, descuentoPago1, naranja));
+
         Venta venta = carrito.pagar(descuentoMarca1, descuentoPago1, cliente, naranja);
+
         tienda.agregarVenta(venta);
 
         assertTrue(tienda.existeVenta(venta));
@@ -124,9 +127,7 @@ public class CarritoTest {
     public void productoSinCategoria() {
         Marca comarca = new Marca("Comarca");
 
-        assertThrows(RuntimeException.class, () -> {
-            new Producto("Remera", "1", 4000.0, comarca, null);
-        });
+        assertThrows(RuntimeException.class, () -> new Producto("Remera", "1", 4000.0, comarca, null));
     }
 
     @Test
@@ -134,9 +135,7 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
         Categoria categoria1 = new Categoria("Indumentaria");
 
-        assertThrows(RuntimeException.class, () -> {
-            new Producto("Remera", "1", null, comarca, categoria1);
-        });
+        assertThrows(RuntimeException.class, () -> new Producto("Remera", "1", null, comarca, categoria1));
     }
 
     @Test
@@ -144,45 +143,33 @@ public class CarritoTest {
         Marca comarca = new Marca("Comarca");
         Categoria categoria1 = new Categoria("Indumentaria");
 
-        assertThrows(RuntimeException.class, () -> {
-            new Producto(null, "1", 4000.0, comarca, categoria1);
-        });
+        assertThrows(RuntimeException.class, () -> new Producto(null, "1", 4000.0, comarca, categoria1));
     }
 
     //cliente sin dni, nombre y apellido
     @Test
     public void clienteSinDNI() {
-        assertThrows(RuntimeException.class, () -> {
-            new Cliente("Daiana", "Alonso", null, "dalonso@gmail.com");
-        });
+        assertThrows(RuntimeException.class, () -> new Cliente("Daiana", "Alonso", null, "dalonso@gmail.com"));
     }
 
     @Test
     public void clienteSinNombre() {
-        assertThrows(RuntimeException.class, () -> {
-            new Cliente(null, "Alonso", "42448077", "dalonso@gmail.com");
-        });
+        assertThrows(RuntimeException.class, () -> new Cliente(null, "Alonso", "42448077", "dalonso@gmail.com"));
     }
 
     @Test
     public void clienteSinApellido() {
-        assertThrows(RuntimeException.class, () -> {
-            new Cliente("Daiana", null, "42448077", "dalonso@gmail.com");
-        });
+        assertThrows(RuntimeException.class, () -> new Cliente("Daiana", null, "42448077", "dalonso@gmail.com"));
     }
 
     @Test
     public void clienteConMailValido() {
-        assertThrows(RuntimeException.class, () -> {
-            new Cliente("Daiana", "Alonso", "42448077", "123");
-        });
+        assertThrows(RuntimeException.class, () -> new Cliente("Daiana", "Alonso", "42448077", "123"));
     }
 
     // descuento de pago con fechas invalidas
     @Test
     public void descuentoConFechaInvalida() {
-        assertThrows(RuntimeException.class, () -> {
-            new PagoPromocion(LocalDate.now(), LocalDate.now().minusDays(2), Tarjeta.NARANJA);
-        });
+        assertThrows(RuntimeException.class, () -> new PagoPromocion(LocalDate.now(), LocalDate.now().minusDays(2), Tarjeta.NARANJA));
     }
 }
