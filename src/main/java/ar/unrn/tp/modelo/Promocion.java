@@ -1,6 +1,7 @@
 package ar.unrn.tp.modelo;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 
 public abstract class Promocion {
     private LocalDate fechaInicio;
@@ -15,5 +16,10 @@ public abstract class Promocion {
 
     private boolean validarFecha(LocalDate fechaInicio, LocalDate fechaFin) {
         return fechaInicio.isBefore(fechaFin);
+    }
+
+    public boolean estaEnCurso() {
+        LocalDate hoy = LocalDate.now();
+        return hoy.isAfter(fechaInicio) && hoy.isBefore(fechaFin);
     }
 }
