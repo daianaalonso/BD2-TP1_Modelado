@@ -1,11 +1,13 @@
 package ar.unrn.tp.modelo;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class MarcaPromocion extends Promocion {
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Marca marca;
 
     public MarcaPromocion(LocalDate fechaInicio, LocalDate fechaFin, Double porcentaje, Marca marca) {
@@ -18,15 +20,19 @@ public class MarcaPromocion extends Promocion {
     }
 
     public double aplicarDescuento(Producto producto) {
-        if (producto.esMarca(this.marca)) {
+        if (producto.suMarcaEs(this.marca)) {
             return descuento();
         }
         return 0;
     }
 
-    public double descuento() {
+    private double descuento() {
         if (estaEnCurso())
             return super.porcentaje();
         return 0;
+    }
+
+    public boolean suMarcaEs(Marca marca) {
+        return this.marca.esMarca(marca);
     }
 }

@@ -2,14 +2,13 @@ package ar.unrn.tp.modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Marca {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String nombre;
 
@@ -18,7 +17,6 @@ public class Marca {
     }
 
     protected Marca() {
-
     }
 
     public void setId(Long id) {
@@ -27,5 +25,13 @@ public class Marca {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean esMarca(Marca marca) {
+        return this.nombre.equals(marca.nombre());
+    }
+
+    private String nombre() {
+        return this.nombre;
     }
 }

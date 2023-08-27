@@ -9,10 +9,15 @@ import javax.persistence.*;
 import java.util.List;
 
 public class ProductoServiceJPA implements ProductoService {
+    private String servicio;
+
+    public ProductoServiceJPA(String servicio) {
+        this.servicio = servicio;
+    }
 
     @Override
     public void crearProducto(String codigo, String descripcion, Double precio, Long idCategoria, Long idMarca) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
@@ -47,7 +52,7 @@ public class ProductoServiceJPA implements ProductoService {
 
     @Override
     public void modificarProducto(Long idProducto, String descripcion, String codigo, Double precio, Long idMarca, Long idCategoria) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
@@ -81,7 +86,7 @@ public class ProductoServiceJPA implements ProductoService {
 
     @Override
     public List listarProductos() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {

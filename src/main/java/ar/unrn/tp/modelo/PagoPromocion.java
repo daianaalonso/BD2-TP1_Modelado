@@ -1,10 +1,14 @@
 package ar.unrn.tp.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
 public class PagoPromocion extends Promocion {
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Tarjeta tarjeta;
 
 
@@ -14,7 +18,6 @@ public class PagoPromocion extends Promocion {
     }
 
     protected PagoPromocion() {
-
     }
 
     public double aplicarDescuento(double total, Tarjeta tarjeta) {
@@ -23,9 +26,13 @@ public class PagoPromocion extends Promocion {
         return total;
     }
 
-    public double descuento() {
+    private double descuento() {
         if (estaEnCurso())
             return super.porcentaje();
         return 0;
+    }
+
+    public boolean suTarjetaEs(Tarjeta tarjeta) {
+        return this.tarjeta.esTarjeta(tarjeta);
     }
 }

@@ -8,35 +8,38 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class VentaServiceJPA implements VentaService {
+
+    private String servicio;
+    public VentaServiceJPA(String servicio) {
+        this.servicio = servicio;
+    }
+
     @Override
     public void realizarVenta(Long idCliente, List<Long> productos, Long idTarjeta) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         Carrito carrito = new Carrito();
         try {
             tx.begin();
-            //busca al cliente
+
             Cliente cliente = em.find(Cliente.class, idCliente);
             if (cliente == null)
                 throw new RuntimeException("El cliente no existe.");
-            //busca la tarjeta
+
             Tarjeta tarjeta = em.find(Tarjeta.class, idTarjeta);
             if (tarjeta == null)
                 throw new RuntimeException("La tarjeta no existe.");
-            //valida que la tarjeta sea del cliente
             if (!cliente.miTarjeta(tarjeta))
                 throw new RuntimeException("La tarjeta no es del cliente.");
-            // busca que existan los productos y los agrega al carrito
+
             TypedQuery<Producto> q = em.createQuery("SELECT p FROM Producto p WHERE p.id IN :productos", Producto.class);
             q.setParameter("productos", productos);
             List<Producto> productosVendidos = q.getResultList();
             if (productosVendidos.isEmpty())
                 throw new RuntimeException("Error. La lista de productos esta vacia.");
-
             carrito.agregarProductosAlCarrito(productosVendidos);
 
-            //trae las promos activas de pago y marca
             TypedQuery<PagoPromocion> qp = em.createQuery("SELECT p FROM PagoPromocion p WHERE p.fechaInicio < :fecha and p.fechaFin > :fecha", PagoPromocion.class);
             qp.setParameter("fecha", LocalDate.now());
             PagoPromocion pagoPromocion = qp.getSingleResult();
@@ -59,27 +62,23 @@ public class VentaServiceJPA implements VentaService {
 
     @Override
     public Double calcularMonto(List<Long> productos, Long idTarjeta) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         Carrito carrito = new Carrito();
         try {
             tx.begin();
-            //busca la tarjeta
             Tarjeta tarjeta = em.find(Tarjeta.class, idTarjeta);
             if (tarjeta == null)
                 throw new RuntimeException("La tarjeta no existe.");
 
-            // busca que existan los productos y los agrega al carrito
             TypedQuery<Producto> q = em.createQuery("SELECT p FROM Producto p WHERE p.id IN :productos", Producto.class);
             q.setParameter("productos", productos);
             List<Producto> productosSeleccionados = q.getResultList();
             if (productosSeleccionados.isEmpty())
                 throw new RuntimeException("Error. La lista de productos esta vacia.");
-
             carrito.agregarProductosAlCarrito(productosSeleccionados);
 
-            //trae las promos activas de pago y marca
             TypedQuery<PagoPromocion> qp = em.createQuery("SELECT p FROM PagoPromocion p WHERE p.fechaInicio < :fecha and p.fechaFin > :fecha", PagoPromocion.class);
             qp.setParameter("fecha", LocalDate.now());
             PagoPromocion pagoPromocion = qp.getSingleResult();
@@ -101,7 +100,7 @@ public class VentaServiceJPA implements VentaService {
 
     @Override
     public List ventas() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {

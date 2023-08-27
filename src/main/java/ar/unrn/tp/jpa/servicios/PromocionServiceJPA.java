@@ -10,9 +10,16 @@ import javax.persistence.Persistence;
 import java.time.LocalDate;
 
 public class PromocionServiceJPA implements PromocionService {
+
+    private String servicio;
+
+    public PromocionServiceJPA(String servicio) {
+        this.servicio = servicio;
+    }
+
     @Override
     public void crearDescuentoSobreTotal(String marcaTarjeta, LocalDate fechaDesde, LocalDate fechaHasta, Double porcentaje) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
@@ -31,12 +38,12 @@ public class PromocionServiceJPA implements PromocionService {
 
     @Override
     public void crearDescuento(String marcaProducto, LocalDate fechaDesde, LocalDate fechaHasta, Double porcentaje) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-objectdb");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.servicio);
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            Promocion p = new MarcaPromocion(fechaDesde, fechaHasta, porcentaje, new Marca(marcaProducto));
+            MarcaPromocion p = new MarcaPromocion(fechaDesde, fechaHasta, porcentaje, new Marca(marcaProducto));
             em.persist(p);
             tx.commit();
         } catch (Exception e) {

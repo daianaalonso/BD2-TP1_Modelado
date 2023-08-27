@@ -17,7 +17,7 @@ public class Venta {
     private Tarjeta tarjeta;
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Producto> productosVendidos;
-    private double montoTotal;
+    private Double montoTotal;
 
     public Venta(LocalDateTime fecha, Cliente cliente, Tarjeta tarjeta, List<Producto> productosVendidos, Double montoTotal) {
         this.productosVendidos = productosVendidos;
@@ -28,7 +28,6 @@ public class Venta {
     }
 
     public Venta() {
-
     }
 
     public void setId(Long id) {
@@ -37,5 +36,9 @@ public class Venta {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean montoEs(Double montoTotal){
+        return this.montoTotal.equals(montoTotal);
     }
 }

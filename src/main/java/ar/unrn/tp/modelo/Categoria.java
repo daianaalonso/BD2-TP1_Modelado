@@ -2,13 +2,12 @@ package ar.unrn.tp.modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Categoria {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String nombre;
 
@@ -25,5 +24,13 @@ public class Categoria {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean esCategoria(Categoria categoria) {
+        return this.nombre.equals(categoria.nombre);
+    }
+
+    private String nombre() {
+        return this.nombre;
     }
 }

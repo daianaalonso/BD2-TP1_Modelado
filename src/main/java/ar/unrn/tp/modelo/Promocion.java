@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public abstract class Promocion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
@@ -23,7 +23,6 @@ public abstract class Promocion {
     }
 
     protected Promocion() {
-
     }
 
     private boolean validarFecha(LocalDate fechaInicio, LocalDate fechaFin) {
@@ -45,5 +44,17 @@ public abstract class Promocion {
 
     protected double porcentaje() {
         return this.porcentaje;
+    }
+
+    public boolean inicia(LocalDate fechaInicio) {
+        return this.fechaInicio.equals(fechaInicio);
+    }
+
+    public boolean finaliza(LocalDate fechaFin) {
+        return this.fechaFin.equals(fechaFin);
+    }
+
+    public boolean suDescuentoEs(double porcentaje) {
+        return this.porcentaje.equals(porcentaje);
     }
 }

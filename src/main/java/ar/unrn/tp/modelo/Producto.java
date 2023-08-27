@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String descripcion;
     @Column(unique = true)
@@ -16,6 +16,31 @@ public class Producto {
     private Marca marca;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Categoria categoria;
+
+    public Producto(Long id, String descripcion, String codigo, Double precio, Marca marca, Categoria categoria) {
+        if (esDatoVacio(codigo))
+            throw new RuntimeException("El codigo debe ser valido");
+        this.codigo = codigo;
+
+        if (descripcion == null || descripcion.isEmpty())
+            throw new RuntimeException("La descripcion debe ser valida");
+        this.descripcion = descripcion;
+
+        if (esDatoVacio(String.valueOf(precio)) || esDatoNulo(precio))
+            throw new RuntimeException("El precio debe ser valido");
+        this.precio = precio;
+
+        if (esDatoNulo(categoria))
+            throw new RuntimeException("La categoria debe ser valida");
+        this.categoria = categoria;
+
+        if (esDatoNulo(marca))
+            throw new RuntimeException("La marca debe ser valida");
+        this.marca = marca;
+
+        this.id = id;
+    }
+
 
     public Producto(String descripcion, String codigo, Double precio, Marca marca, Categoria categoria) {
         if (esDatoVacio(codigo))
@@ -40,7 +65,6 @@ public class Producto {
     }
 
     protected Producto() {
-
     }
 
     private boolean esDatoVacio(String dato) {
@@ -49,30 +73,6 @@ public class Producto {
 
     private boolean esDatoNulo(Object dato) {
         return dato == null;
-    }
-
-    public String descripcion() {
-        return descripcion;
-    }
-
-    public String codigo() {
-        return codigo;
-    }
-
-    public double precio() {
-        return precio;
-    }
-
-    public Categoria categoria() {
-        return categoria;
-    }
-
-    public Marca marca() {
-        return marca;
-    }
-
-    public boolean esMarca(Marca marca) {
-        return this.marca.equals(marca);
     }
 
     public void setId(Long id) {
@@ -101,5 +101,45 @@ public class Producto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public boolean suDescripcionEs(String descripcion) {
+        return this.descripcion.equals(descripcion);
+    }
+
+    public boolean suCodigoEs(String codigo) {
+        return this.codigo.equals(codigo);
+    }
+
+    public boolean suPrecioEs(Double precio){
+        return this.precio.equals(precio);
+    }
+
+    public boolean suMarcaEs(Marca marca) {
+        return this.marca.esMarca(marca);
+    }
+
+    public boolean suCategoriaEs(Categoria categoria){
+        return this.categoria.esCategoria(categoria);
+    }
+
+    public String descripcion() {
+        return this.descripcion;
+    }
+
+    public String codigo() {
+        return this.codigo;
+    }
+
+    public Double precio() {
+        return this.precio;
+    }
+
+    public Marca marca() {
+        return this.marca;
+    }
+
+    public Categoria categoria() {
+        return this.categoria;
     }
 }
