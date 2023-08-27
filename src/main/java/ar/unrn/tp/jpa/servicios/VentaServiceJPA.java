@@ -44,8 +44,7 @@ public class VentaServiceJPA implements VentaService {
             qp.setParameter("fecha", LocalDate.now());
             PagoPromocion pagoPromocion = qp.getSingleResult();
 
-            TypedQuery<MarcaPromocion> qm = em.createQuery("SELECT m FROM MarcaPromocion m WHERE m.fechaInicio < :fecha and m.fechaFin > :fecha", MarcaPromocion.class);
-            qm.setParameter("fecha", LocalDate.now());
+            TypedQuery<MarcaPromocion> qm = em.createQuery("SELECT m FROM MarcaPromocion m", MarcaPromocion.class);
             List<MarcaPromocion> marcaPromociones = qm.getResultList();
 
             Venta v = carrito.pagar(marcaPromociones, pagoPromocion, cliente, tarjeta);

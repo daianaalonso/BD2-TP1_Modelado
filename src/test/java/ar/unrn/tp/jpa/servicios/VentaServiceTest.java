@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -35,21 +36,19 @@ public class VentaServiceTest {
                     remera = new Producto("Remera", "123", 3500.0, nike, indumentaria);
                     pantalon = new Producto("Pantalon", "345", 7000.0, nike, indumentaria);
                     pagoPromocion = new PagoPromocion(LocalDate.now().minusDays(4), LocalDate.now().plusDays(3), 0.08, visa);
-                    marcaPromocion = new MarcaPromocion(LocalDate.now().minusDays(4), LocalDate.now().plusDays(3), 0.05, nike);
+                    marcaPromocion = new MarcaPromocion(LocalDate.now().minusDays(7), LocalDate.now().plusDays(3), 0.05, nike);
 
-                    em.persist(cliente);
-                    em.persist(nike);
-                    em.persist(indumentaria);
-                    em.persist(remera);
-                    em.persist(pantalon);
                     em.persist(pagoPromocion);
                     em.persist(marcaPromocion);
+                    em.persist(cliente);
+                    em.persist(remera);
+                    em.persist(pantalon);
                 }
         );
     }
 
     @Test
-    public void persistirVenta() {
+    public void crearVenta() {
         inTransactionExecute(
                 (em) -> {
                     TypedQuery<Long> q = em.createQuery("SELECT p.id FROM Producto p", Long.class);

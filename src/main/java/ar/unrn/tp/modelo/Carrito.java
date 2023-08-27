@@ -32,12 +32,16 @@ public class Carrito {
             throw new RuntimeException("La tarjeta no puede ser vacia.");
         for (Producto producto : productos) {
             total += producto.precio();
-            double descuento = marcaPromociones.stream()
-                    .mapToDouble(promo -> producto.precio() * promo.aplicarDescuento(producto))
-                    .sum();
-            total -= descuento;
+            if (!marcaPromociones.isEmpty()) {
+                double descuento = marcaPromociones.stream()
+                        .mapToDouble(promo -> producto.precio() * promo.aplicarDescuento(producto))
+                        .sum();
+                total -= descuento;
+            }
         }
-        return pagoPromocion.aplicarDescuento(total, tarjeta);
+        if (pagoPromocion != null)
+            total = pagoPromocion.aplicarDescuento(total, tarjeta);
+        return total;
     }
 
     public Venta pagar(List<MarcaPromocion> marcaPromociones, PagoPromocion pagoPromocion, Cliente cliente, Tarjeta tarjeta) {
