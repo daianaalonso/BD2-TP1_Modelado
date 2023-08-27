@@ -47,4 +47,5 @@ public class Carrito {
     public Venta pagar(List<MarcaPromocion> marcaPromociones, PagoPromocion pagoPromocion, Cliente cliente, Tarjeta tarjeta) {
         return new Venta(LocalDateTime.now(), cliente, tarjeta, this.productos, calcularMontoCarrito(marcaPromociones, pagoPromocion, tarjeta));
     }
+
 }

@@ -184,4 +184,5 @@ public class CarritoTest {
     public void descuentoConFechaInvalida() {
         assertThrows(RuntimeException.class, () -> new PagoPromocion(LocalDate.now(), LocalDate.now().minusDays(2), 0.08, new Tarjeta("NARANJA", 1234567)));
     }
+
 }
