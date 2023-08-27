@@ -11,6 +11,13 @@ public class Carrito {
         productos = new ArrayList<>();
     }
 
+    public void agregarProductosAlCarrito(List<Producto> productos) {
+        if (productos.isEmpty()) {
+            throw new RuntimeException("La lista de productos no puede ser vacia.");
+        }
+        this.productos.addAll(productos);
+    }
+
     public void agregarProductoAlCarrito(Producto p) {
         if (p == null) {
             throw new RuntimeException("El producto no puede ser vacio.");
@@ -18,20 +25,22 @@ public class Carrito {
         this.productos.add(new Producto(p.descripcion(), p.codigo(), p.precio(), p.marca(), p.categoria()));
     }
 
-    public double calcularMontoCarrito(MarcaPromocion marcaPromocion, PagoPromocion pagoPromocion, Tarjeta tarjeta) {
-        if (marcaPromocion == null || pagoPromocion == null)
-            throw new RuntimeException("Las promociones no pueden ser vacias.");
+    //cambiar por lista de marcaPromocion
+    public double calcularMontoCarrito(List<MarcaPromocion> marcaPromociones, PagoPromocion pagoPromocion, Tarjeta tarjeta) {
+        double total = 0;
         if (tarjeta == null)
             throw new RuntimeException("La tarjeta no puede ser vacia.");
-
-        double precio = 0;
-        for (Producto producto : this.productos) {
-            precio += producto.precio() - (producto.precio() * marcaPromocion.aplicarDescuento(producto));
+        for (Producto producto : productos) {
+            total += producto.precio();
+            double descuento = marcaPromociones.stream()
+                    .mapToDouble(promo -> producto.precio() * promo.aplicarDescuento(producto))
+                    .sum();
+            total -= descuento;
         }
-        return pagoPromocion.aplicarDescuento(precio, tarjeta);
+        return pagoPromocion.aplicarDescuento(total, tarjeta);
     }
 
-    public Venta pagar(MarcaPromocion marcaPromocion, PagoPromocion pagoPromocion, Cliente cliente, Tarjeta tarjeta) {
-        return new Venta(LocalDateTime.now(), cliente, tarjeta, productos, calcularMontoCarrito(marcaPromocion, pagoPromocion, tarjeta));
+    public Venta pagar(List<MarcaPromocion> marcaPromociones, PagoPromocion pagoPromocion, Cliente cliente, Tarjeta tarjeta) {
+        return new Venta(LocalDateTime.now(), cliente, tarjeta, this.productos, calcularMontoCarrito(marcaPromociones, pagoPromocion, tarjeta));
     }
 }

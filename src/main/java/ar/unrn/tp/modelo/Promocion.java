@@ -1,17 +1,29 @@
 package ar.unrn.tp.modelo;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 
+@Entity
+@Inheritance
 public abstract class Promocion {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    private Double porcentaje;
 
-    public Promocion(LocalDate fechaInicio, LocalDate fechaFin) {
+    public Promocion(LocalDate fechaInicio, LocalDate fechaFin, Double porcentaje) {
         if (!validarFecha(fechaInicio, fechaFin))
             throw new RuntimeException("Las fechas de la promoción no son validas.");
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.porcentaje = porcentaje;
+    }
+
+    protected Promocion() {
+
     }
 
     private boolean validarFecha(LocalDate fechaInicio, LocalDate fechaFin) {
@@ -21,5 +33,17 @@ public abstract class Promocion {
     public boolean estaEnCurso() {
         LocalDate hoy = LocalDate.now();
         return hoy.isAfter(fechaInicio) && hoy.isBefore(fechaFin);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    protected double porcentaje() {
+        return this.porcentaje;
     }
 }
